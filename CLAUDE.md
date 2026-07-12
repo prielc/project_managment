@@ -27,3 +27,11 @@ At the end of every development task (a meaningful chunk of code/config changes 
 4. Push to the remote (once one is configured), including creating/pushing a new branch if needed.
 
 This standing authorization covers commit and push as routine steps of finishing a task. It does **not** cover destructive or history-rewriting operations (force-push, reset --hard, rebase of shared history, deleting branches) — those still require asking first, per standard git safety practice.
+
+## Working process rules
+
+1. Before writing any code, describe your approach and wait for approval. Always ask clarifying questions before writing any code if requirements are ambiguous.
+2. If a task requires changes to more than 3 files, stop and break it into smaller tasks first.
+3. After writing code, list what could break and suggest tests to cover it.
+4. When there's a bug, start by writing a test that reproduces it, then fix it until the test passes.
+5. Every time the user corrects you, add a new rule to this file so it never happens again.
