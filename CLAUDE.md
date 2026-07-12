@@ -39,7 +39,8 @@ npx prisma studio                       # browse the SQLite DB visually
 - `src/app/api/lookups/route.ts` — combined GET for the three lookup lists, used to populate dropdowns.
 - `src/lib/types.ts` — hand-written shared types (`ProjectWithRelations`, `Lookup`, `Lookups`) mirroring the Prisma `include` shape used across server/client.
 - App is RTL (`dir="rtl"`, `lang="he"` on `<html>`) — this is a Hebrew-language UI throughout.
-- `/settings` (lookup-list management: ContentDomain/WeaponSystem/Analyst CRUD) is linked from the homepage but not yet built.
+- `src/lib/lookupApi.ts` — generic `lookupListHandlers`/`lookupItemHandlers` factory shared by the three lookup entities' Route Handlers (`api/content-domains`, `api/weapon-systems`, `api/analysts`, each with a `[id]` subroute), since all three are identical `{id, name}` CRUD. Handles unique-name conflicts (409) and delete-while-referenced-by-a-project conflicts (409, via the FK constraint) uniformly.
+- `src/app/settings/page.tsx` + `src/components/LookupManager.tsx` — management UI for the three closed lists (add/rename/delete), one `LookupManager` instance per entity, linked from the homepage header.
 
 ## Next steps for future sessions
 
