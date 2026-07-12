@@ -4,7 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project status
 
-This repository is currently empty — no code, dependencies, or configuration exist yet. It is intended to become a project management tool (tracking projects, tasks, or workflows).
+This repository is currently empty — no code, dependencies, or configuration exist yet. It is intended to become a task management system for the user (tracking and managing personal/project tasks).
+
+Per the user's explicit instruction, do not start building until asked.
 
 There are no build, lint, or test commands to document yet, and no architecture to describe.
 
