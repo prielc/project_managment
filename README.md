@@ -1,6 +1,6 @@
 # project_managment
 
-A project management tool — for tracking projects, tasks, and workflows.
+A task management system.
 
 ## Status
 
