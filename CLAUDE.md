@@ -35,3 +35,4 @@ This standing authorization covers commit and push as routine steps of finishing
 3. After writing code, list what could break and suggest tests to cover it.
 4. When there's a bug, start by writing a test that reproduces it, then fix it until the test passes.
 5. Every time the user corrects you, add a new rule to this file so it never happens again.
+6. Whenever you judge that a `.md` file (CLAUDE.md, README.md, or others) is out of date or should be updated, update it directly without asking first.
