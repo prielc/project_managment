@@ -4,20 +4,36 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project status
 
-This repository is currently empty — no code, dependencies, or configuration exist yet. It is intended to become a task management system for the user (tracking and managing personal/project tasks).
+A task management system for the user (single-user, no auth). First feature being built: **projects** (a `Task` model tracking individual tasks-within-a-project is planned but not yet built).
 
-Per the user's explicit instruction, do not start building until asked.
+## Tech stack
 
-There are no build, lint, or test commands to document yet, and no architecture to describe.
+- **Next.js 16** (App Router, TypeScript, `src/` dir, Tailwind CSS v4) — full-stack app, frontend + Route Handlers in one deployable.
+- **Prisma 7** ORM with **SQLite** (`better-sqlite3` driver adapter — Prisma 7 requires an explicit driver adapter, there is no implicit runtime connection from `datasource.url` anymore).
+- Prisma client is generated to `src/generated/prisma` (gitignored, regenerate with `npx prisma generate`). Import it via the shared singleton at `src/lib/prisma.ts`, not directly.
+- The installed Next.js/Prisma versions are newer than typical training data — **check `node_modules/next/dist/docs/` (and the actual generated Prisma client types) before assuming an API**, per the `AGENTS.md` warning generated into this repo.
+
+## Commands
+
+```bash
+npm run dev       # start dev server (localhost:3000)
+npm run build     # production build
+npm run lint      # eslint
+npm run db:seed   # seed lookup tables (ContentDomain, WeaponSystem, Analyst) with placeholder values
+npx prisma migrate dev --name <name>   # create + apply a migration after editing prisma/schema.prisma
+npx prisma generate                     # regenerate the client (needed after schema changes / fresh install)
+npx prisma studio                       # browse the SQLite DB visually
+```
+
+## Data model
+
+- `Project`: name, plus three required FKs — `contentDomain` (עולם תוכן), `weaponSystem` (אמל"ח מוביל), `analyst` (אנליסט).
+- `ContentDomain`, `WeaponSystem`, `Analyst`: simple `id` + unique `name` lookup tables. These are **closed lists** managed through the UI (not hardcoded) — seeded with placeholder values via `prisma/seed.ts`, expected to be edited/extended by the user.
+- Task-level model (tasks within a project) is intentionally not built yet — projects are the first slice.
 
 ## Next steps for future sessions
 
-When code is added to this repository, update this file with:
-- Setup/build/lint/test commands
-- The chosen tech stack and why
-- High-level architecture (how major pieces fit together) once it exists
-
-Until then, don't assume a framework, language, or structure — ask the user or check for freshly added files before scaffolding anything.
+Keep this section current as the data model and architecture evolve — update it whenever a new model, route group, or major structural decision is added, per the self-updating `.md` rule below.
 
 ## Git workflow (autonomous)
 

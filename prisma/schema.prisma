@@ -1,0 +1,47 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model ContentDomain {
+  id        String    @id @default(cuid())
+  name      String    @unique
+  createdAt DateTime  @default(now())
+  projects  Project[]
+}
+
+model WeaponSystem {
+  id        String    @id @default(cuid())
+  name      String    @unique
+  createdAt DateTime  @default(now())
+  projects  Project[]
+}
+
+model Analyst {
+  id        String    @id @default(cuid())
+  name      String    @unique
+  createdAt DateTime  @default(now())
+  projects  Project[]
+}
+
+model Project {
+  id              String   @id @default(cuid())
+  name            String
+  contentDomainId String
+  contentDomain   ContentDomain @relation(fields: [contentDomainId], references: [id])
+  weaponSystemId  String
+  weaponSystem    WeaponSystem  @relation(fields: [weaponSystemId], references: [id])
+  analystId       String
+  analyst         Analyst       @relation(fields: [analystId], references: [id])
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
