@@ -31,6 +31,16 @@ npx prisma studio                       # browse the SQLite DB visually
 - `ContentDomain`, `WeaponSystem`, `Analyst`: simple `id` + unique `name` lookup tables. These are **closed lists** managed through the UI (not hardcoded) — seeded with placeholder values via `prisma/seed.ts`, expected to be edited/extended by the user.
 - Task-level model (tasks within a project) is intentionally not built yet — projects are the first slice.
 
+## Architecture
+
+- `src/app/page.tsx` — Server Component, fetches initial data directly via `prisma` (no API round-trip for first paint), renders `ProjectsClient`.
+- `src/components/ProjectsClient.tsx` — Client Component owning list state; calls the API routes for mutations, then re-fetches + `router.refresh()`. Renders `ProjectForm` inline (no modal library) and an inline confirm-before-delete row (not `window.confirm`).
+- `src/app/api/projects/route.ts` (GET/POST) and `src/app/api/projects/[id]/route.ts` (PATCH/DELETE) — Project CRUD.
+- `src/app/api/lookups/route.ts` — combined GET for the three lookup lists, used to populate dropdowns.
+- `src/lib/types.ts` — hand-written shared types (`ProjectWithRelations`, `Lookup`, `Lookups`) mirroring the Prisma `include` shape used across server/client.
+- App is RTL (`dir="rtl"`, `lang="he"` on `<html>`) — this is a Hebrew-language UI throughout.
+- `/settings` (lookup-list management: ContentDomain/WeaponSystem/Analyst CRUD) is linked from the homepage but not yet built.
+
 ## Next steps for future sessions
 
 Keep this section current as the data model and architecture evolve — update it whenever a new model, route group, or major structural decision is added, per the self-updating `.md` rule below.
